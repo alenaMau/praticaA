@@ -1,29 +1,45 @@
 describe('Cypress Test',() => {
-  it ('None-existent login test',() => {
-      cy.fixture('personal_area').then(data => {
-          cy.log('Переxод на личную страницу')
-          cy.visit(data.main_url)
-
-          cy.log('Переход в уведомления')
-          cy.get('a[class="router-link-active router-link-exact-active header__item"]')
-            .type(data.login)
-
-          cy.log('Ввод email')
-          cy.get('input[class="form-input--email form-input"]')
-            .type(data.email)
-
-          cy.log('Ввод пароля')
-          cy.get('div[class="form-control--medium form-control"]')
-            .type(data.password)
-
-          cy.log('Ввод пароля')
-          cy.get('input[class="form-control--medium form-control"]')
-            .type(data.password)
-
-          cy.log('Клик по кнопке "Войти')
-          cy.get('div[class="registration-form__button"] button[type="submit"]')
-            .click()
-      })
-  })
+    it ('None-existent login test',() => {
+        cy.fixture('cypressTest').then(data => {
+            cy.log('Переxод на страницу автозации')
+            cy.visit(data.main_url)
+            cy.log('Ввод несуществующего логина')
+            cy.get('input[class="form-input--text form-input"]')
+                .type(data.login)
+            cy.log('Ввод несуществующего пароля')
+            cy.get('input[class="form-input--password form-input"]')
+                .type(data.password)
+            cy.log('Клик по кнопке "Войти')
+            cy.get('div[class="login-form__button"] button[type="submit"]')
+                .click()
+            cy.wait(1500)
+            cy.get('.header__nav > [href="/notification"]')
+                .click()
+            cy.log('Переxод на уведомления')
+            cy.wait(1500)
+            cy.log('Чтение всех уведомления')
+            cy.get('.notification-title > .link')
+                .click()
+            cy.log('Переход на определеное уведомление')
+            cy.get(':nth-child(1) > .notification-list-item > .button')
+                .click()
+            cy.log('Переxод на рабочее пространство')
+            cy.wait(1500)
+            cy.get(':nth-child(1) > .responses-list-item__content-company > .button')
+                .click()
+            cy.log('Открытый чат')
+        })
+    })
 })
-
+//
+// it ('None-existent notifications test',() => {
+//     cy.fixture('notifications').then(data => {
+//         cy.log('')
+//         cy.get('.header__nav > [href="/notification"]')
+//
+//         cy.log('Переxод на уведомления')
+//         // cy.get('div[class="button button__background-color-light-blue')
+//         //     .click()
+//
+//     })
+// })
