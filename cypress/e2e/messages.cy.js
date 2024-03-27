@@ -1,6 +1,6 @@
-describe('Cypress Test',() => {
-    it ('None-existent login test',() => {
-        cy.fixture('cypressTest').then(data => {
+describe('Cypress Test', () => {
+    it('None-existent login test', () => {
+        cy.fixture('messages').then(data => {
             cy.log('Переxод на страницу авторизации')
             cy.viewport(1750, 890)
             cy.visit(data.main_url)
@@ -18,19 +18,17 @@ describe('Cypress Test',() => {
                 .click()
             cy.log('Переxод на уведомления')
             cy.wait(1500)
-            cy.log('Чтение всех уведомления')
-            cy.get('.notification-title > .link')
-                .click()
-            cy.log('Переход на определеное уведомление')
             cy.get(':nth-child(1) > .notification-list-item > .button')
                 .click()
-            cy.log('Переxод на рабочее пространство')
-            cy.wait(1500)
             cy.get(':nth-child(1) > .responses-list-item__content-company > .button')
                 .click()
-            cy.log('Открытый чат')
+            cy.log('Входим в рабочее пространство(чат)')
+            cy.get('.form-area')
+                .type(data.messages)
+            cy.log('Ввод Сообщения')
+            cy.get('.comment-textarea__buttons > :nth-child(2)')
+                .click()
+            cy.log('Отправляем сообщение')
         })
     })
 })
-
-
